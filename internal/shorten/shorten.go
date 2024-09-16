@@ -5,8 +5,7 @@ import (
 )
 
 func GenerateNewURL(url string) string {
-	encoded := base64.StdEncoding.EncodeToString([]byte(url))
-	return encoded
+	return base64.StdEncoding.EncodeToString([]byte(url))
 }
 
 func Shorten(urlEncoded string) string {
