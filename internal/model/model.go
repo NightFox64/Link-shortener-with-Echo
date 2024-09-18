@@ -2,8 +2,6 @@ package model
 
 import (
 	"errors"
-
-	"gorm.io/gorm"
 )
 
 var (
@@ -12,7 +10,6 @@ var (
 )
 
 type ShortenedURLModel struct {
-	gorm.Model
 	originalURL string
-	shortURL    string `gorm: unique index`
+	shortURL    string `gorm:"unique_short_index"`
 }

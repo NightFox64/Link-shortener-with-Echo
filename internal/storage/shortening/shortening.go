@@ -10,13 +10,13 @@ import (
 const (
 	Host     = "localhost"
 	User     = "postgres"
-	Password = "*******"
-	Name     = "payment"
+	Password = "Ichiho64"
+	Name     = "postgres"
 	Port     = "5432"
 )
 
 func Setup() (*gorm.DB, error) {
-	connectionString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslname=disable",
+	connectionString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s",
 		Host,
 		Port,
 		User,
@@ -27,5 +27,6 @@ func Setup() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	return db, err
+	return db, nil
+
 }
