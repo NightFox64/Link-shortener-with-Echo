@@ -9,7 +9,7 @@ var (
 	ErrIDExist  = errors.New("this id already exists")
 )
 
-type ShortenedURLModel struct {
+type AllURLModel struct {
 	originalURL string
 	shortURL    string `gorm:"unique_short_index"`
 }
