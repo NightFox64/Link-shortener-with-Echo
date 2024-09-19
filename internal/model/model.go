@@ -10,6 +10,6 @@ var (
 )
 
 type AllURLModel struct {
-	originalURL string
-	shortURL    string `gorm:"unique_short_index"`
+	OriginalURL string
+	ShortURL    string `gorm:"unique_short_index"`
 }

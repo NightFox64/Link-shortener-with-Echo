@@ -1,8 +1,10 @@
 package shortening
 
 import (
+	"errors"
 	"fmt"
 
+	"github.com/NightFox64/Link-shortener-with-Echo/internal/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -27,6 +29,46 @@ func Setup() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	db.AutoMigrate(&model.AllURLModel{})
+
 	return db, nil
 
+}
+
+func CreateURLTable(db *gorm.DB, urlTabel model.AllURLModel) (int64, error) {
+	result := db.Create(&urlTabel)
+	if result.RowsAffected == 0 {
+		return 0, errors.New("urlTabel not created")
+	}
+	return result.RowsAffected, nil
+}
+
+// Idk what I did
+func FindShortURLWithOrig(db *gorm.DB, orig string) (model.AllURLModel, error) {
+	var urlTabel model.AllURLModel
+	result := db.First(&urlTabel, "original_url = ?", orig)
+	if result.RowsAffected == 0 {
+		return model.AllURLModel{}, errors.New("data not found")
+	}
+	return urlTabel, nil
+}
+
+// you send db, orig url and tabel with changed stats
+func UpdateShortURL(db *gorm.DB, orig string, urlTabel model.AllURLModel) (model.AllURLModel, error) {
+	var updateURLTabel model.AllURLModel
+	result := db.Model(&updateURLTabel).Where("original_url = ?", orig).Updates(urlTabel)
+	if result.RowsAffected == 0 {
+		return model.AllURLModel{}, errors.New("can't update")
+	}
+	return updateURLTabel, nil
+}
+
+func DeleteURL(db *gorm.DB, orig string) (int64, error) {
+	var deletedTabel model.AllURLModel
+	result := db.Where("original_url = ?", orig).Delete(&deletedTabel)
+	if result.RowsAffected == 0 {
+		return 0, errors.New("https://youtu.be/nwuW98yLsgY?feature=shared")
+	}
+	return result.RowsAffected, nil
 }
