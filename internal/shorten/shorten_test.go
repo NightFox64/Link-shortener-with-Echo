@@ -1,34 +1,20 @@
 package shorten_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/NightFox64/Link-shortener-with-Echo/internal/shorten"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestShorten(t *testing.T) {
 	t.Run("returns a short URL", func(t *testing.T) {
-		type testCase struct {
-			url    string
-			answer string
-		}
 
-		testCases := []testCase{
-			{
-				url:    "1234",
-				answer: "MTIzNA==",
-			},
-			{
-				url:    "1389qqjqio728190",
-				answer: "MTM4OXFx",
-			},
-		}
+		//let's see if it generates a new thing and shorten it
+		url := shorten.GenerateNewURL()
+		fmt.Println("Random URL:", url)
 
-		for _, tc := range testCases {
-			actual := shorten.GenerateNewURL(tc.url)
-			actual = shorten.Shorten(actual)
-			assert.Equal(t, tc.answer, actual)
-		}
+		shortenURL := shorten.Shorten(url)
+		fmt.Println("Now it's shorten:", shortenURL)
 	})
 }

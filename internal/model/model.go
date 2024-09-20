@@ -2,6 +2,8 @@ package model
 
 import (
 	"errors"
+
+	. "github.com/samber/mo"
 )
 
 var (
@@ -10,6 +12,12 @@ var (
 )
 
 type AllURLModel struct {
+	Identifier  string `json:"identifier"`
 	OriginalURL string
 	ShortURL    string `gorm:"unique_short_index"`
+}
+
+type InputURLModel struct {
+	RawURL     string
+	Identifier Option[string]
 }
