@@ -34,11 +34,3 @@ func ShortenURLHandler(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, urlTabel)
 }
-
-func RedirectURLHandler(c echo.Context, longURL string) error {
-	if longURL == "" {
-		return c.JSON(http.StatusNotFound, "error: URL not found")
-	}
-
-	return c.Redirect(http.StatusFound, longURL)
-}
