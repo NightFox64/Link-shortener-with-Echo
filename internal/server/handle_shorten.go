@@ -37,7 +37,7 @@ func ShortenURLHandler(c echo.Context) error {
 
 func RedirectURLHandler(c echo.Context, longURL string) error {
 	if longURL == "" {
-		return c.JSON(http.StatusNotFound, map[string]string{"error": "URL not found"})
+		return c.JSON(http.StatusNotFound, "error: URL not found")
 	}
 
 	return c.Redirect(http.StatusFound, longURL)
