@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"github.com/labstack/echo/v4"
+)
 
 func main() {
-	fmt.Println("I'll end soon")
+	e := echo.New()
+
+	e.POST("/shorten", shortenURL)
+	e.GET("/:shortened", redirectURL)
+
+	e.Logger.Fatal(e.Start(":8080"))
 }
