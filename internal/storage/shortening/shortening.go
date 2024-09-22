@@ -54,6 +54,15 @@ func FindShortURLWithOrig(db *gorm.DB, orig string) (model.AllURLModel, error) {
 	return urlTabel, nil
 }
 
+func FindOrigURLWithShort(db *gorm.DB, short string) (model.AllURLModel, error) {
+	var urlTabel model.AllURLModel
+	result := db.First(&urlTabel, "short_url = ?", short)
+	if result.RowsAffected == 0 {
+		return model.AllURLModel{}, errors.New("data not found")
+	}
+	return urlTabel, nil
+}
+
 // you send db, orig url and tabel with changed stats
 func UpdateShortURL(db *gorm.DB, orig string, urlTabel model.AllURLModel) (model.AllURLModel, error) {
 	var updateURLTabel model.AllURLModel
