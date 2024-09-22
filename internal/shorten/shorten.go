@@ -11,8 +11,8 @@ func GenerateNewURL() string {
 }
 
 func Shorten(urlEncoded string) string {
-	if len(urlEncoded) < 8 {
+	if len(urlEncoded) < 6 {
 		return urlEncoded
 	}
-	return urlEncoded[:8]
+	return urlEncoded[:6]
 }

@@ -21,7 +21,7 @@ func ShortenURLHandler(c echo.Context) error {
 	}
 	fmt.Println(url.Url)
 
-	shortened := shorten.Shorten(url.Url)
+	shortened := shorten.Shorten(shorten.GenerateNewURL())
 
 	urlTabel := model.AllURLModel{
 		OriginalURL: url.Url,
