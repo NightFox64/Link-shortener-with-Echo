@@ -77,7 +77,7 @@ func DeleteURL(orig string) (int64, error) {
 	var deletedTabel model.AllURLModel
 	result := GlobalDB.Where("original_url = ?", orig).Delete(&deletedTabel)
 	if result.RowsAffected == 0 {
-		return 0, errors.New("https://youtu.be/nwuW98yLsgY?feature=shared")
+		return 0, errors.New("nothing to delete")
 	}
 	return result.RowsAffected, nil
 }
