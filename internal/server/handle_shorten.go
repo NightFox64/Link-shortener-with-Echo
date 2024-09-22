@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/NightFox64/Link-shortener-with-Echo/internal/model"
@@ -9,19 +10,24 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type longURL struct {
+	url string
+}
+
 func ShortenURLHandler(c echo.Context) error {
-	//longURL := c.FormValue("url")
-
-	longURL := ""
-	if err := c.Bind(longURL); err != nil {
-		return err
-	}
-
-	//if longURL == "" {
-	//	return c.JSON(http.StatusBadRequest, "error: URL is required")
+	url := new(longURL)
+	//if err := c.Bind(&url); err != nil {
+	//	return err
 	//}
 
-	shortened := shorten.Shorten(longURL)
+	err1 := (&echo.DefaultBinder{}).BindBody(c, &url)
+	if err1 != nil {
+		return err1
+	}
+
+	fmt.Println(url.url)
+
+	shortened := shorten.Shorten(url.url)
 
 	db, err := shortening.Setup()
 	if err != nil {
@@ -29,7 +35,7 @@ func ShortenURLHandler(c echo.Context) error {
 	}
 
 	urlTabel := model.AllURLModel{
-		OriginalURL: longURL,
+		OriginalURL: url.url,
 		ShortURL:    shortened,
 	}
 
