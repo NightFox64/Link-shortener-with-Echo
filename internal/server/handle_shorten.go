@@ -10,10 +10,16 @@ import (
 )
 
 func ShortenURLHandler(c echo.Context) error {
-	longURL := c.FormValue("url")
-	if longURL == "" {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "URL is required"})
+	//longURL := c.FormValue("url")
+
+	longURL := ""
+	if err := c.Bind(longURL); err != nil {
+		return err
 	}
+
+	//if longURL == "" {
+	//	return c.JSON(http.StatusBadRequest, "error: URL is required")
+	//}
 
 	shortened := shorten.Shorten(longURL)
 
@@ -35,10 +41,7 @@ func ShortenURLHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, urlTabel)
 }
 
-func RedirectURLHandler(c echo.Context, longURL string) error {
-	if longURL == "" {
-		return c.JSON(http.StatusNotFound, "error: URL not found")
-	}
-
-	return c.Redirect(http.StatusFound, longURL)
+func RedirectURLHandler(c echo.Context) error {
+	data := c.Param("shortened")
+	return c.Redirect(http.StatusFound, data)
 }
