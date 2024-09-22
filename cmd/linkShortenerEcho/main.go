@@ -11,7 +11,7 @@ func main() {
 	e := echo.New()
 
 	e.POST("/shorten", server.ShortenURLHandler)
-	//e.GET("/:shortened", server.RedirectURLHandler)
+	e.GET("/:shortened", server.RedirectURLHandler)
 
 	e.Start(":8080")
 }

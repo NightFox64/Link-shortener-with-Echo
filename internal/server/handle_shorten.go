@@ -11,23 +11,17 @@ import (
 )
 
 type longURL struct {
-	url string
+	Url string `json:"url"`
 }
 
 func ShortenURLHandler(c echo.Context) error {
-	url := new(longURL)
-	//if err := c.Bind(&url); err != nil {
-	//	return err
-	//}
-
-	err1 := (&echo.DefaultBinder{}).BindBody(c, &url)
-	if err1 != nil {
-		return err1
+	var url longURL
+	if err := c.Bind(&url); err != nil {
+		return err
 	}
+	fmt.Println(url.Url)
 
-	fmt.Println(url.url)
-
-	shortened := shorten.Shorten(url.url)
+	shortened := shorten.Shorten(url.Url)
 
 	db, err := shortening.Setup()
 	if err != nil {
@@ -35,7 +29,7 @@ func ShortenURLHandler(c echo.Context) error {
 	}
 
 	urlTabel := model.AllURLModel{
-		OriginalURL: url.url,
+		OriginalURL: url.Url,
 		ShortURL:    shortened,
 	}
 
