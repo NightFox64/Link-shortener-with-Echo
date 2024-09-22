@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/NightFox64/Link-shortener-with-Echo/cmd/linkShortenerEcho/main"
 	"github.com/NightFox64/Link-shortener-with-Echo/internal/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -38,7 +37,7 @@ func Setup() (*gorm.DB, error) {
 }
 
 func CreateURLTable(urlTabel model.AllURLModel) (int64, error) {
-	result := main.DataBase.Create(&urlTabel)
+	result := GlobalDB.Create(&urlTabel)
 	if result.RowsAffected == 0 {
 		return 0, errors.New("urlTabel not created")
 	}
@@ -48,7 +47,7 @@ func CreateURLTable(urlTabel model.AllURLModel) (int64, error) {
 // Idk what I did
 func FindShortURLWithOrig(orig string) (model.AllURLModel, error) {
 	var urlTabel model.AllURLModel
-	result := main.DataBase.First(&urlTabel, "original_url = ?", orig)
+	result := GlobalDB.First(&urlTabel, "original_url = ?", orig)
 	if result.RowsAffected == 0 {
 		return model.AllURLModel{}, errors.New("data not found")
 	}
@@ -57,7 +56,7 @@ func FindShortURLWithOrig(orig string) (model.AllURLModel, error) {
 
 func FindOrigURLWithShort(short string) (model.AllURLModel, error) {
 	var urlTabel model.AllURLModel
-	result := main.DataBase.First(&urlTabel, "short_url = ?", short)
+	result := GlobalDB.First(&urlTabel, "short_url = ?", short)
 	if result.RowsAffected == 0 {
 		return model.AllURLModel{}, errors.New("data not found")
 	}
@@ -67,7 +66,7 @@ func FindOrigURLWithShort(short string) (model.AllURLModel, error) {
 // you send db, orig url and tabel with changed stats
 func UpdateShortURL(orig string, urlTabel model.AllURLModel) (model.AllURLModel, error) {
 	var updateURLTabel model.AllURLModel
-	result := main.DataBase.Model(&updateURLTabel).Where("original_url = ?", orig).Updates(urlTabel)
+	result := GlobalDB.Model(&updateURLTabel).Where("original_url = ?", orig).Updates(urlTabel)
 	if result.RowsAffected == 0 {
 		return model.AllURLModel{}, errors.New("can't update")
 	}
@@ -76,7 +75,7 @@ func UpdateShortURL(orig string, urlTabel model.AllURLModel) (model.AllURLModel,
 
 func DeleteURL(orig string) (int64, error) {
 	var deletedTabel model.AllURLModel
-	result := main.DataBase.Where("original_url = ?", orig).Delete(&deletedTabel)
+	result := GlobalDB.Where("original_url = ?", orig).Delete(&deletedTabel)
 	if result.RowsAffected == 0 {
 		return 0, errors.New("https://youtu.be/nwuW98yLsgY?feature=shared")
 	}

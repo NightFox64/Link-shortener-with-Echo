@@ -23,19 +23,14 @@ func ShortenURLHandler(c echo.Context) error {
 
 	shortened := shorten.Shorten(url.Url)
 
-	db, err := shortening.Setup()
-	if err != nil {
-		return err
-	}
-
 	urlTabel := model.AllURLModel{
 		OriginalURL: url.Url,
 		ShortURL:    shortened,
 	}
 
-	_, err0 := shortening.CreateURLTable(db, urlTabel)
+	_, err0 := shortening.CreateURLTable(urlTabel)
 	if err0 != nil {
-		return err
+		return err0
 	}
 
 	return c.JSON(http.StatusOK, urlTabel)

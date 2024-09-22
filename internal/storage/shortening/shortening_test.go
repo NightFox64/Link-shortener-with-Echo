@@ -36,11 +36,6 @@ func TestMigrate(t *testing.T) {
 func TestCreateTabel(t *testing.T) {
 	t.Run("Create urlTabel in DB", func(t *testing.T) {
 		//connect to postgres
-		db, err := shortening.Setup()
-		if err != nil {
-			log.Panic(err)
-			return
-		}
 		fmt.Println("Connected")
 
 		//create a urlTabel
@@ -49,7 +44,7 @@ func TestCreateTabel(t *testing.T) {
 			ShortURL:    "qwe",
 		}
 
-		result, err := shortening.CreateURLTable(db, urlTabel)
+		result, err := shortening.CreateURLTable(urlTabel)
 		if err != nil {
 			log.Panic(err)
 			return
@@ -62,17 +57,12 @@ func TestCreateTabel(t *testing.T) {
 func TestFindURL(t *testing.T) {
 	t.Run("Find tabel with certain URL", func(t *testing.T) {
 		//connect to postres
-		db, err := shortening.Setup()
-		if err != nil {
-			log.Panic(err)
-			return
-		}
 		fmt.Println("Connected")
 
 		//select an url
 		orig := "qwertyuiop"
 
-		tabel, _ := shortening.FindShortURLWithOrig(db, orig)
+		tabel, _ := shortening.FindShortURLWithOrig(orig)
 		fmt.Println("Here's your tabel:", tabel)
 	})
 }
@@ -80,20 +70,15 @@ func TestFindURL(t *testing.T) {
 func TestUpdateURL(t *testing.T) {
 	t.Run("Update tabel with certain URL", func(t *testing.T) {
 		//connect to postres
-		db, err := shortening.Setup()
-		if err != nil {
-			log.Panic(err)
-			return
-		}
 		fmt.Println("Connected")
 
 		//select an url
 		orig := "qwertyuiop"
-		urlTabel, _ := shortening.FindShortURLWithOrig(db, orig)
+		urlTabel, _ := shortening.FindShortURLWithOrig(orig)
 		fmt.Println("Your url is:", urlTabel)
 
 		//update url with smth new
-		updatedTabel, _ := shortening.UpdateShortURL(db, orig, model.AllURLModel{
+		updatedTabel, _ := shortening.UpdateShortURL(orig, model.AllURLModel{
 			ShortURL: "123",
 		})
 
@@ -104,20 +89,15 @@ func TestUpdateURL(t *testing.T) {
 func TestDeleteURL(t *testing.T) {
 	t.Run("Update tabel with certain URL", func(t *testing.T) {
 		//connect to postres
-		db, err := shortening.Setup()
-		if err != nil {
-			log.Panic(err)
-			return
-		}
 		fmt.Println("Connected")
 
 		//select an url
 		orig := "qwertyuiop"
-		urlTabel, _ := shortening.FindShortURLWithOrig(db, orig)
+		urlTabel, _ := shortening.FindShortURLWithOrig(orig)
 		fmt.Println("Your url is:", urlTabel)
 
 		//delete url
-		shortening.DeleteURL(db, orig)
+		shortening.DeleteURL(orig)
 		fmt.Println("Your URL is deleted")
 	})
 }
