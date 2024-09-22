@@ -38,5 +38,9 @@ func ShortenURLHandler(c echo.Context) error {
 
 func RedirectURLHandler(c echo.Context) error {
 	data := c.Param("shortened")
-	return c.Redirect(http.StatusFound, data)
+	urlTabel, err := shortening.FindOrigURLWithShort(data)
+	if err != nil {
+		return err
+	}
+	return c.Redirect(http.StatusFound, urlTabel.OriginalURL)
 }
