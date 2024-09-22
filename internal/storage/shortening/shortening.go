@@ -14,11 +14,16 @@ const (
 	User     = "postgres"
 	Password = "Ichiho64"
 	Name     = "postgres"
-	Port     = "8080"
+	Port     = "5432"
 )
 
 func Setup() (*gorm.DB, error) {
-	connectionString := fmt.Sprintf("host=%s, port=%s", Host, Port)
+	connectionString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s",
+		Host,
+		Port,
+		User,
+		Name,
+		Password)
 
 	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
