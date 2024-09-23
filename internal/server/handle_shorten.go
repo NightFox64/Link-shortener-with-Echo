@@ -10,23 +10,22 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-//type LonURL struct {
-//	Url string `json:"url"`
-//}
+type LonURL struct {
+	Url string `json:"url"`
+}
 
 func ShortenURLHandler(c echo.Context) error {
 	fmt.Println(c)
-	//var url LonURL
-	var orig string
-	if err := c.Bind(&orig); err != nil {
+	var url LonURL
+	if err := c.Bind(&url); err != nil {
 		return err
 	}
-	fmt.Println(orig)
+	fmt.Println(url.Url)
 
 	shortened := shorten.Shorten(shorten.GenerateNewURL())
 
 	urlTabel := model.AllURLModel{
-		OriginalURL: orig,
+		OriginalURL: url.Url,
 		ShortURL:    shortened,
 	}
 
