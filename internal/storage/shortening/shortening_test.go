@@ -60,7 +60,7 @@ func TestFindURL(t *testing.T) {
 		fmt.Println("Connected")
 
 		//select an url
-		orig := "qwertyuiop"
+		orig := "dejwkldwnejkldkwnjdwl"
 
 		tabel, _ := shortening.FindShortURLWithOrig(orig)
 		fmt.Println("Here's your tabel:", tabel)

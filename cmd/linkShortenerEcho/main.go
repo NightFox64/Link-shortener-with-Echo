@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	//url := shorten.Shorten(shorten.GenerateNewURL())
 
 	e := echo.New()
 
