@@ -10,12 +10,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type LongURL struct {
+type LonURL struct {
 	Url string `json:"url"`
 }
 
 func ShortenURLHandler(c echo.Context) error {
-	var url longURL
+	var url LonURL
 	if err := c.Bind(&url); err != nil {
 		return err
 	}
