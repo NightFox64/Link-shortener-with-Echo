@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type longURL struct {
+type LongURL struct {
 	Url string `json:"url"`
 }
 
