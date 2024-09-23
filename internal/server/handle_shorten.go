@@ -34,11 +34,11 @@ func ShortenURLHandler(c echo.Context) error {
 		return err0
 	}
 
-	return c.JSON(http.StatusOK, urlTabel)
+	return c.JSON(http.StatusOK, urlTabel.ShortURL)
 }
 
 func RedirectURLHandler(c echo.Context) error {
-	data := c.Param("ShortURL")
+	data := c.Param("shortened")
 	urlTabel, err := shortening.FindOrigURLWithShort(data)
 	if err != nil {
 		return err
